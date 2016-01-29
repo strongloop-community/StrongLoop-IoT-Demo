@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            StrongLoop Edison IoT Demo
+        </title>
+        <link href="../style.css" rel="stylesheet" type="text/css">
+        <link href="../c3.css" rel="stylesheet" type="text/css">
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8" type="text/javascript">
+</script>
+        <script src="../js/c3.js" type="text/javascript">
+</script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript">
+</script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h3 style="text-align:center">
+                    StrongLoop Edison IoT Demo
+                </h3>
+            </div>
+            <div class="nav">
+                Select a Sensor to view: <script src="../js/menu.js" language="JavaScript" type="text/javascript">
+</script>
+                    <div class="live" id="live"></div>
+                    
+            </div>
+            <div class="Main">
+                <h1 style="text-align:center">
+                    Edison Sensors: Accelerometer
+                </h1><script type="text/javascript">
+
+                var graphData = [];
+                var chart;  
+                var src;
+                var buttonnode;  
+                jQuery.getJSON("../api/Sensors", function (data){
+
+                var dataSet = data;
+                var dateFormat = d3.time.format("%m/%d/%Y %H:%M:%S");
+                dataSet.forEach(function(d) {
+                d.date_posted = dateFormat.parse(d.time);
+                d.accelX = +d.accelX;
+                d.accelY = +d.accelY;
+                d.accelZ = +d.accelZ;
+                });
+
+                graphData[0] = dataSet.map(function(o) { return o.accelX; });
+                graphData[1] = dataSet.map(function(o) { return o.accelY; });
+                graphData[2] = dataSet.map(function(o) { return o.accelZ; });
+                graphData[3] =  dataSet.map(function(o) { return o.date_posted; });
+                graphData[0].splice(0,0,'Accelerometer X-Axis');
+                graphData[1].splice(0,0,'Accelerometer Y-Axis');
+                graphData[2].splice(0,0,'Accelerometer Z-Axis');
+                graphData[3].splice(0,0,'x');
+                chart = c3.generate({
+                bindto: '#chart',
+                data: {
+                  x: 'x',
+                  columns: [
+                      graphData[3],
+                      graphData[0],
+                      graphData[1],
+                      graphData[2]
+
+                  ]
+                },
+                axis: {
+                        x: {
+                            type: 'timeseries',
+                            tick: {
+                                format: '%d/%m/%Y %H:%M:%S'
+                            }
+                        }
+                    }
+                });
+                });
+                var urlToChangeStream = '../api/Sensors/change-stream?_format=event-stream';
+                src = new EventSource(urlToChangeStream);
+                var btn = document.getElementById('live');
+                buttonnode= document.createElement('input');
+                buttonnode.setAttribute('type','button');
+                buttonnode.setAttribute('name','Show Live Data');
+                buttonnode.setAttribute('value','Show Live Data');
+                buttonnode.onclick=go_live;
+                btn.appendChild(buttonnode);
+                function go_live(){
+                    if(this.value == 'Show Live Data'){
+                        buttonnode.setAttribute('name', 'Stop Live Data');
+                        buttonnode.setAttribute('value', 'Stop Live Data');
+                        src.addEventListener('data', live_data);
+                    } else {
+                        buttonnode.setAttribute('value', 'Show Live Data');
+                        buttonnode.setAttribute('name','Show Live Data');
+                        src.removeEventListener('data', live_data);
+                    }
+                };
+                function live_data(msg){
+                var data = JSON.parse(msg.data);
+                var newData = data.data;
+                var dateFormat = d3.time.format("%m/%d/%Y %H:%M:%S");
+
+                newData.date_posted = dateFormat.parse(newData.time);
+                chart.flow({
+                  columns: [
+                      ['x', newData.date_posted],
+                      ['Accelerometer X-Axis', newData.accelX],
+                      ['Accelerometer Y-Axis', newData.accelY],
+                      ['Accelerometer Z-Axis', newData.accelZ]
+                  ]
+                });
+
+                console.log(newData); // the change object
+                };
+                </script>
+                <div id="chart"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <p class="contact">
+                © 2016 StrongLoop, an IBM Company: Developed by <a href="http://dragonflyiot.com" target="_blank">Dragonfly IoT</a>
+            </p>
+        </div>
+    </body>
+</html>
