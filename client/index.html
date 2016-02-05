@@ -22,8 +22,53 @@
 <div class="nav">
 Select a Sensor to view:
 	  <script src="js/menu.js" language="JavaScript" type="text/javascript"></script>
-
+      <div class="live"><button type="button" onclick="resetMongo();">Restart Mongo DB</button>
+      <button type="button" onclick="restartSensors();">Restart Sensor Logger</button> </div>
 </div>
+<script>
+function resetMongo(){
+    
+    var ip = location.hostname;
+    var baseurl = 'http://' + ip + '/submitForm';
+    var xmlHttpReq = false;
+
+    var self = this;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    // IE
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open("POST", baseurl, true);
+    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    var data = 'data=findMongo';
+    self.xmlHttpReq.send(data);
+
+};
+function restartSensors(){
+    
+    var ip = location.hostname;
+    var baseurl = 'http://' + ip + '/submitForm';
+    var xmlHttpReq = false;
+
+    var self = this;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    // IE
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open("POST", baseurl, true);
+    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    var data = 'data=resetSensors';
+    self.xmlHttpReq.send(data);
+
+};
+</script>
 <div class="Main">
 
 
@@ -54,24 +99,29 @@ Select a Sensor to view:
         <li>The StrongLoop application serves webpages that display the sensor reading in graph form
           <ul>
             <li>You can graph each individual reading, or group them by gyroscope, Accelerometer and Magnetometer, or view them all in one chart. </li>
+            <li>You can start and stop the streaming of Live Data from the Edison using the "Live Data" button on the sensor Viewing Pages.</li>
           </ul>
         </li>
       </ul>
       <p>How do you run the demo?</p>
       <ul>
-        <li>Connect your host computer to the Console port of the device and use a terminal emulator program to connect to the device -- it boots automatically on applying power to the device</li>
-        <li>Log in as root, using the password DemoDemo</li>
-        <li>Run the command configure_edison --wifi and select the wifi network to connect to. If a password is required, enter that as well. Take note of the IP Address displayed once connected!</li>
-        <li>Run the script start-demo.sh in the root user's home directory which will
-          <ul>
-            <li>Clear the MongoDB database</li>
-            <li>Start the MongoDB Database</li>
-            <li>Start the sensor logging program</li>
-            <li>Start the Strongloop application</li>
-          </ul>
+        <li>Almost all of the required processes are already running on the Edison!</li>
+        <li>If you've previously run the Demo, click the "Reset MongoDB" button above to clear out the data store so it doesn't grow too large.</li>
+        <li>Click the "Restart Sensor Logger" Button above to start the sensor logging process.</li>
+        <li>Choose a Sensor or set of sensors to view from the pull-down menu above.</li>
+        <li>You can return to this page any time to restart the sensor logger or the Mongo DB processes</li>
+        <li>If you want to run things manually, or you're having trouble with the above buttons then:
+        <ul>
+            <li>Log in to the Intel Edison via ssh using Username: root Password: DemoDemo</li>
+            <li>Run the script demo-ctrl.sh in the root user's home with the following available options:
+            <ul>
+                <li>start: Start all the necessary processes (restarts them if they are running)</li>
+                <li>stop:  Stop all the running processes for the Demo.</li>
+                <li>update: Make sure that all the packages required for the demo are up to date from GitHub</li>
+                <li>clear: Clear out the Mongo DB datastrore.</li>
+           </ul>
+       </ul>
         </li>
-        <li>Point your web browser to http://&lt;IP Address&gt;:3000/ And you should see this page.</li>
-        <li>Select a sensor from the pull-down menu to view the data.</li>
         <li>Try moving the sensor around a lot and then load data to get the best views.</li>
       </ul>
      
