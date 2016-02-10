@@ -16,9 +16,12 @@ header {
     margin-bottom: 1em;
 }
 
-footer {
-    margin-top: 1em;
-    font-size: 0.8em;
+nav a {
+    padding: 0 0.5em;
+    border-left: 1px solid #ddd;
+}
+nav a.last {
+    border-right: 1px solid #ddd;
 }
 
 .container {
@@ -26,10 +29,14 @@ footer {
     padding: 0 2em;
 }
 
-
 a:link, a:visited {
     color: #81c341;
 }
 a:hover, a:active {
-    color: #009;
+    color: #ccc;
+}
+
+footer {
+    margin-top: 1em;
+    font-size: 0.8em;
 }
