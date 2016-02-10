@@ -1,36 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html lang="en" ng-app="app">
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>
-            StrongLoop Edison IoT Demo
-        </title>
+        <title>StrongLoop Edison IoT Demo</title>
+        
         <link href="../style.css" rel="stylesheet" type="text/css">
         <link href="../c3.css" rel="stylesheet" type="text/css">
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8" type="text/javascript">
-</script>
-        <script src="../js/c3.js" type="text/javascript">
-</script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript">
-</script>
+        
+        <script src="../js/d3.v3.min.js" charset="utf-8" type="text/javascript"></script>
+        <script src="../js/c3.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.min.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
             <div class="header">
                 <h3 style="text-align:center">
-                    StrongLoop Edison IoT Demo
+                    <a href="https://strongloop.com" style="color:#81c341">StrongLoop</a> Edison IoT Demo
                 </h3>
             </div>
+            
             <div class="nav">
-                Select a Sensor to view: <script src="../js/menu.js" language="JavaScript" type="text/javascript">
-</script>
-                    <div class="live" id="live"></div>
-                    
+                Select a Sensor to view: <script src="../js/menu.js" language="JavaScript" type="text/javascript"></script>
+                <div class="live" id="live"></div>
             </div>
+            
             <div class="Main">
                 <h1 style="text-align:center">
                     Edison Sensors: Accelerometer
-                </h1><script type="text/javascript">
+                </h1>
+                
+                <script type="text/javascript">
 
                 var graphData = [];
                 var chart;  
@@ -71,7 +70,7 @@
                         x: {
                             type: 'timeseries',
                             tick: {
-                                format: '%d/%m/%Y %H:%M:%S'
+                                format: '%H:%M:%S'
                             }
                         }
                     }
@@ -118,9 +117,10 @@
                 <div id="chart"></div>
             </div>
         </div>
+        
         <div class="footer">
             <p class="contact">
-                © 2016 StrongLoop, an IBM Company: Developed by <a href="http://dragonflyiot.com" target="_blank">Dragonfly IoT</a>
+                © 2016 <a href="https://strongloop.com">StrongLoop</a>, an IBM Company: Developed by <a href="http://dragonflyiot.com" target="_blank">Dragonfly IoT</a>
             </p>
         </div>
     </body>
