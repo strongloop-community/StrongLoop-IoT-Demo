@@ -1,5 +1,6 @@
 
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn,
+    path = require('path');
 
 module.exports = function(server) {
 
@@ -13,42 +14,34 @@ module.exports = function(server) {
         });
     });
     
-    server.post('/reset-mongo', function(req, res) {
-        console.log('Resetting Mongo');
+    server.post('/script/:name', function(req, res) {
+        var scripts = ['reset-mongo', 'reset-sensors'];
         
-        exec('sh ' + __dirname + '/../reset-mongo.sh', function(err, stdout, stderr) {
-            if (err) {
-                console.error('Problem resetting mongo:', err.stack);
-                return res.status(500).end(err.message);
-            }
-            if (stderr && stderr.length) {
-                console.error('Problem resetting mongo:', stderr.toString());
-                return res.status(500).end(stderr.toString());
-            }
-            
-            console.log('Mongo reset');
-            
-            res.status(200).end('Mongo reset successfully');
+        if (scripts.indexOf(req.params.name) < 0) {
+            return res.status(400).end('Invalid script execution request', req.params.name);
+        }
+        
+        executeCommand(req.params.name, function(err) {
+            res
+                .status((err) ? 500 : 200)
+                .end((err) ? err.message : ('script success:' + req.params.name));
         });
     });
     
-    server.post('/reset-sensors', function(req, res) {
-        console.log('Resetting Sensors');
+    function executeCommand(script, cb) {
+        console.log('Running ' + script);
         
-        exec('sh ' + __dirname + '/../reset-sensors.sh', function(err, stdout, stderr) {
-            if (err) {
-                console.error('Problem resetting sensors:', err.stack);
-                return res.status(500).end(err.message);
-            }
-            if (stderr && stderr.length) {
-                console.error('Problem resetting sensors:', stderr.toString());
-                return res.status(500).end(stderr.toString());
-            }
-            
-            console.log('Sensors reset');
-            
-            res.status(200).end('Sensors reset successfully');
+        var handle = spawn(path.join(__dirname, '..', script + '.sh'), []);
+        
+        handle.stdout.on('data', function(data) {
+            console.log(data.toString());
         });
-    });
+        handle.stderr.on('data', function(data) {
+            console.error(data.toString());
+        });
+        handle.on('close', function(code) {
+            cb((code) ? (new Error('Failed to run ' + script + ': ' + code)) : null);
+        });
+    }
 
 };

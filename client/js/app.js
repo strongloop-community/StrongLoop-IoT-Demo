@@ -13,34 +13,21 @@
     
     
     function connectResetLinks() {
-        var mBtn = $('.reset-mongo'),
-            sBtn = $('.reset-sensors');
+        var resetBtns = $('.reset-mongo, .reset-sensors');
         
-        mBtn.on('click', function resetMongo() {
-            mBtn.attr('disabled', 'disabled');
+        resetBtns.on('click', function resetRequest() {
+            var btn = $(this);
+            btn.attr('disabled', 'disabled');
+            
             $.ajax({
-                url: '/reset-mongo',
+                url: '/script/' + btn.attr('class'),
                 type: 'POST'
-            }).then(function() {
-                console.info('Mongo reset');
-                mBtn.attr('disabled', false);
+            }).then(function(data) {
+                console.info('Reset success:', data);
+                btn.attr('disabled', false);
             }).fail(function(xhr, status, e) {
-                console.error('Unable to reset mongo', e);
-                mBtn.attr('disabled', false);
-            });
-        });
-
-        sBtn.on('click', function resetSensors() {
-            sBtn.attr('disabled', 'disabled');
-            $.ajax({
-                url: '/reset-sensors',
-                type: 'POST'
-            }).then(function() {
-                console.info('Sensors reset');
-                sBtn.attr('disabled', false);
-            }).fail(function(xhr, status, e) {
-                console.error('Unable to reset sensors', e);
-                sBtn.attr('disabled', false);
+                console.error('Unable to reset' + btn.attr('class'), e);
+                btn.attr('disabled', false);
             });
         });
     }
