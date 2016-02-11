@@ -1,7 +1,6 @@
 
 (function($, d3, c3) {
-    var dateFormat = d3.time.format("%m/%d/%Y %H:%M:%S");
-    var evSrc = new EventSource('/api/Sensors/change-stream?_format=event-stream');
+    var dateFormat, evSrc;
     
     $(function() {
         connectResetLinks();
@@ -41,6 +40,9 @@
     
     
     function initChart(div) {
+        
+        dateFormat = d3.time.format("%m/%d/%Y %H:%M:%S");
+        evSrc = new EventSource('/api/Sensors/change-stream?_format=event-stream');
         
         getAndFormatData(div.data('sensor'))
             .then(function(columns) {
@@ -94,7 +96,7 @@
         var data = JSON.parse(msg.data).data;
         
         this.chart.flow({
-            columns: dataFormatters[this.type](data),
+            columns: dataFormatters[this.type]([data]), // formatters expect an array
             length: 0,
             duration: 10
         });
