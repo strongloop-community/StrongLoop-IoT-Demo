@@ -26,6 +26,8 @@ module.exports = function(server) {
                 return res.status(500).end(stderr.toString());
             }
             
+            console.log('Mongo reset');
+            
             res.status(200).end('Mongo reset successfully');
         });
     });
@@ -42,6 +44,8 @@ module.exports = function(server) {
                 console.error('Problem resetting sensors:', stderr.toString());
                 return res.status(500).end(stderr.toString());
             }
+            
+            console.log('Sensors reset');
             
             res.status(200).end('Sensors reset successfully');
         });

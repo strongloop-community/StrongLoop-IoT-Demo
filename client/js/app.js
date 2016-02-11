@@ -13,25 +13,34 @@
     
     
     function connectResetLinks() {
-        $('.reset-mongo').on('click', function resetMongo() {
+        var mBtn = $('.reset-mongo'),
+            sBtn = $('.reset-sensors');
+        
+        mBtn.on('click', function resetMongo() {
+            mBtn.attr('disabled', 'disabled');
             $.ajax({
                 url: '/reset-mongo',
                 type: 'POST'
             }).then(function() {
                 console.info('Mongo reset');
+                mBtn.attr('disabled', false);
             }).fail(function(xhr, status, e) {
                 console.error('Unable to reset mongo', e);
+                mBtn.attr('disabled', false);
             });
         });
 
-        $('.reset-sensors').on('click', function resetSensors() {
+        sBtn.on('click', function resetSensors() {
+            sBtn.attr('disabled', 'disabled');
             $.ajax({
                 url: '/reset-sensors',
                 type: 'POST'
             }).then(function() {
                 console.info('Sensors reset');
+                sBtn.attr('disabled', false);
             }).fail(function(xhr, status, e) {
                 console.error('Unable to reset sensors', e);
+                sBtn.attr('disabled', false);
             });
         });
     }
