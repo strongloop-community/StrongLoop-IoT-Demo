@@ -16,7 +16,7 @@ module.exports = function(server) {
     server.post('/reset-mongo', function(req, res) {
         console.log('Resetting Mongo');
         
-        var mongopid = exec('sh ../reset-mongo.sh', function(err, stdout, stderr) {
+        exec('sh ' + __dirname + '/../reset-mongo.sh', function(err, stdout, stderr) {
             if (err) {
                 console.error('Problem resetting mongo:', err.stack);
                 return res.status(500).end(err.message);
@@ -33,7 +33,7 @@ module.exports = function(server) {
     server.post('/reset-sensors', function(req, res) {
         console.log('Resetting Sensors');
         
-        var mongopid = exec('sh ../reset-sensors.sh', function(err, stdout, stderr) {
+        exec('sh ' + __dirname + '/../reset-sensors.sh', function(err, stdout, stderr) {
             if (err) {
                 console.error('Problem resetting sensors:', err.stack);
                 return res.status(500).end(err.message);
