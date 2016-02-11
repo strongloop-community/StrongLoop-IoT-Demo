@@ -83,9 +83,10 @@
                 if (n.data('live') === 'on'){
                     n.text('Show Live Data').data('live', 'off');
                     evtSrc.removeEventListener('data', handler);
-                    evtSrc && evtSrc.close();
+                    evtSrc.close();
                     evtSrc = null;
                 } else {
+                    chart.unload();
                     n.text('Stop Live Data').data('live', 'on');
                     evtSrc = new EventSource('/api/Sensors/change-stream?_format=event-stream')
                     evtSrc.addEventListener('data', handler);
@@ -98,8 +99,8 @@
         
         this.chart.flow({
             columns: dataFormatters[this.type]([data]), // formatters expect an array
-            length: 0,
-            duration: 10
+            length: (this.chart.data()[0] && this.chart.data()[0].values.length > 100) ? 1 : 0,
+            duration: 200
         });
     }
     
