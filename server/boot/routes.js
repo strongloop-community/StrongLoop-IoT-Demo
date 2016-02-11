@@ -62,7 +62,7 @@ module.exports = function(server) {
                     res.status(500).end(''+data);
                 }
             }
-        }
+        });
         
         sensorpid.stderr.on('data', function(data) {
             console.log('Error resetting sensors:', data);
