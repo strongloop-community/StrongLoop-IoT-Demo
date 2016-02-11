@@ -1,5 +1,5 @@
 
-var spawn = require('child_process').spawn;
+var exec = require('child_process').exec;
 
 module.exports = function(server) {
 
@@ -14,65 +14,36 @@ module.exports = function(server) {
     });
     
     server.post('/reset-mongo', function(req, res) {
-        var resSent = false;
-        var exec_cmd = '/usr/lib/edison_config_tools/findmongo.sh';
-        console.log('Resetting Mongo with: ' + exec_cmd);
+        console.log('Resetting Mongo');
         
-        var mongopid = spawn(exec_cmd, []);
-        mongopid.stdout.on('data', function(data) {
-            console.log('Result of mongo reset:', data);
-            if(data == ''){
-                console.log('Reset mongod: ' + data);
-                if (!resSent) {
-                    resSent = true;
-                    res.end('Mongo reset.');
-                }
-            } else {
-                if (!resSent) {
-                    resSent = true;
-                    res.status(500).end(''+data);
-                }
+        var mongopid = exec('sh ../reset-mongo.sh', function(err, stdout, stderr) {
+            if (err) {
+                console.error('Problem resetting mongo:', err.stack);
+                return res.status(500).end(err.message);
             }
-        });
-
-        // listen for data on stderr
-        mongopid.stderr.on('data', function(data){
-            console.log('Error resetting Mongo:', data);
-            if (!resSent) {
-                resSent = true;
-                res.status(500).end(''+data);
+            if (stderr && stderr.length) {
+                console.error('Problem resetting mongo:', stderr.toString());
+                return res.status(500).end(stderr.toString());
             }
+            
+            res.status(200).end('Mongo reset successfully');
         });
     });
     
     server.post('/reset-sensors', function(req, res) {
-        var resSent = false;
-        var exec_cmd = '/usr/lib/edison_config_tools/resetSensors.sh';
-        console.log('Finding Sensors with: ' + exec_cmd);
+        console.log('Resetting Sensors');
         
-        var sensorpid = spawn(exec_cmd, []);
-        sensorpid.stdout.on('data', function(data) {
-            console.log('Result of sensor reset:', data);
-            if(data == ''){
-                console.log('Sensors reset');
-                if (!resSent) {
-                    resSent = true;
-                    res.end('Sensors reset.');
-                }
-            } else {
-                if (!resSent) {
-                    resSent = true;
-                    res.status(500).end(''+data);
-                }
+        var mongopid = exec('sh ../reset-sensors.sh', function(err, stdout, stderr) {
+            if (err) {
+                console.error('Problem resetting sensors:', err.stack);
+                return res.status(500).end(err.message);
             }
-        });
-        
-        sensorpid.stderr.on('data', function(data) {
-            console.log('Error resetting sensors:', data);
-            if (!resSent) {
-                resSent = true;
-                res.status(500).end(''+data);
+            if (stderr && stderr.length) {
+                console.error('Problem resetting sensors:', stderr.toString());
+                return res.status(500).end(stderr.toString());
             }
+            
+            res.status(200).end('Sensors reset successfully');
         });
     });
 
