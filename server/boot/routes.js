@@ -1,3 +1,6 @@
+
+var spawn = require('child_process').spawn;
+
 module.exports = function(server) {
 
     server.get('/', function(req, res) {
