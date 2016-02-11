@@ -217,7 +217,7 @@ elif [ $1 = "start" ]; then
     echo "Starting Strongloop application ..."
     cd StrongLoop-IoT-Demo
     node .  1>loopback.log 2>loopback-error.log &
-    sleep 5
+    sleep 15
     echo "Starting the sensor logger ... "
     cd ../LSM9DS0
     ./sensors --output json --dbhost localhost &
