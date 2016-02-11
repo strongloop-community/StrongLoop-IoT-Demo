@@ -13,9 +13,11 @@
     
     
     function connectResetLinks() {
+        var url = ['http', location.hostname, '/submitForm'].join('');
+        
         $('.reset-mongo').on('click', function resetMongo() {
             $.ajax({
-                url: '/submitForm',
+                url: url,
                 type: 'POST',
                 data: 'data=findMongo'
             }).then(function() {
@@ -27,7 +29,7 @@
 
         $('.reset-sensors').on('click', function resetSensors() {
             $.ajax({
-                url: '/submitForm',
+                url: url,
                 type: 'POST',
                 data: 'data=resetSensors'
             }).then(function() {
