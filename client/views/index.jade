@@ -1,0 +1,81 @@
+extend templates/basic
+
+block content
+    div.Main
+        h2
+            | Edison<sup>&copy;</sup> IoT Sensor Demo Using StrongLoop
+      
+        h3
+            | Demo Components
+        ul
+            li
+                | Hardware:
+                ul
+                    li
+                        | Intel<sup>&copy;</sup> Edison IoT Developement Board
+                    li
+                        | SparkFun Electronics 9-Degrees of Freedom Sensor Board
+                    li
+                        | SparkFun Console Board
+                    li
+                        | Sparkfun Battery Board
+            li
+                | Software:
+                ul
+                    li
+                        | StrongLoop <a href="http://loopback.io">LoopBack</a>
+                    li
+                        | MongoDB
+                    li
+                        | Sensor Reader Application
+    
+        h3
+            | How does the Demo Work?
+        
+        p
+            | The Intel<sup>&copy;</sup> Edison continuously reads the sensor 
+            | data from the 9-Degrees of Freedom sensor board (9-degrees of 
+            | freedom means that the sensor board has a 3-axis accelerometer, 
+            | a 3-axis magnetometer and a 3-axis gyroscope, giving you 9 degrees).
+            | All of this data is written to an instance of MongoDB running on 
+            | the Intel Edison device. The LoopBack Application runs on the 
+            | Intel Edison device exposing ReST APIs to all of the Data stored 
+            | in MongoDB. The LoopBack application also serves webpages that 
+            | display the sensor reading in graph form.
+        p
+            | You can graph each individual reading, or group them by gyroscope, 
+            | Accelerometer, and Magnetometer, or view them all in one chart. 
+            | You can start and stop the streaming of Live Data from the Edison 
+            | using the "Live Data" button on the sensor Viewing Pages.
+
+
+
+        h3
+            | How do you run the demo?
+            
+        p
+            | Almost all of the required processes are already running on the 
+            | Edison! If you've previously run the Demo, click the "Reset 
+            | MongoDB" button above to clear out the data store so it doesn't 
+            | grow too large. Click the "Restart Sensor Logger" Button above 
+            | to start the sensor logging process.
+        p
+            | Choose a Sensor or set of sensors to view from the pull-down 
+            | menu above. You can return to this page any time to restart the 
+            | sensor logger or the Mongo DB processes. If you want to run 
+            | things manually, or you're having trouble with the above buttons 
+            | then:
+        ul
+            li
+                | Log in to the Intel Edison via ssh using Username: root Password: StrongDemo
+            li
+                | Run the script demo-ctrl.sh in the root user's home with the following available options:
+                ul
+                    li start: Start all the necessary processes (restarts them if they are running)
+                    li stop:  Stop all the running processes for the Demo.
+                    li update: Make sure that all the packages required for the demo are up to date from GitHub
+                    li clear: Clear out the Mongo DB datastrore.
+        
+        p
+            | Try moving the sensor around a lot and then load data to get the best views.
+         

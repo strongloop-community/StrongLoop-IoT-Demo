@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset="utf-8")
+        title
+            | StrongLoop IoT Demo
+        link(href="/styles/base.css", rel="stylesheet", type="text/css")
+        
+        script(src="/js/jquery.min.js")
+        script(src="/js/app.js")
+        
+        block head
+                
+    body
+        block header
+            header
+                h1
+                    | StrongLoop Edison IoT Demo
+            
+                include ../partials/nav.jade
+        
+        div.container
+            block content
+
+        include ../partials/footer.jade
+

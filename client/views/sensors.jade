@@ -1,0 +1,19 @@
+extend templates/chart
+
+block head
+    
+
+block content
+    nav
+        button.live(type='button')
+            | Show Live Data
+        button.reset-mongo(type='button')
+            | Restart Mongo DB
+        button.reset-sensors(type='button')
+            | Restart Sensor Logger
+    
+    div.Main
+        h2 Sensor Data - #{type}
+        
+        
+    div#sensor-chart(data-sensor=type)

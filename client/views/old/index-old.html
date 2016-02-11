@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title> StrongLoop IoT Demo</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="c3.css" rel="stylesheet" type="text/css">
+    
+      <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+      <script src="js/c3.js"></script>     
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	  <script src="js/menu.js" language="JavaScript" type="text/javascript"></script>
+
+
+
+  </head>
+  <body>
+  <head>
+  <body>
+  <div class="container">
+<div class="header"><h3 style="text-align:center">StrongLoop Edison IoT Demo</h3></div>
+<div class="nav">
+Select a Sensor to view:
+	  <script src="js/menu.js" language="JavaScript" type="text/javascript"></script>
+      <div class="live"><button type="button" onclick="resetMongo();">Restart Mongo DB</button>
+      <button type="button" onclick="restartSensors();">Restart Sensor Logger</button> </div>
+</div>
+<script>
+function resetMongo(){
+    
+    var ip = location.hostname;
+    var baseurl = 'http://' + ip + '/submitForm';
+    var xmlHttpReq = false;
+
+    var self = this;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    // IE
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open("POST", baseurl, true);
+    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    var data = 'data=findMongo';
+    self.xmlHttpReq.send(data);
+
+};
+function restartSensors(){
+    
+    var ip = location.hostname;
+    var baseurl = 'http://' + ip + '/submitForm';
+    var xmlHttpReq = false;
+
+    var self = this;
+    // Mozilla/Safari
+    if (window.XMLHttpRequest) {
+        self.xmlHttpReq = new XMLHttpRequest();
+    }
+    // IE
+    else if (window.ActiveXObject) {
+        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    self.xmlHttpReq.open("POST", baseurl, true);
+    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    var data = 'data=resetSensors';
+    self.xmlHttpReq.send(data);
+
+};
+</script>
+<div class="Main">
+
+
+      <h1 style="text-align:center">Edison<sup>®</sup> IoT Sensor Demo Using StrongLoop</h1>
+      <p style="text-align: left">Demo Components:</p>
+      <ul>
+        <li>Hardware:
+          <ul>
+            <li>Intel<sup>®</sup> Edison IoT Developement Board</li>
+            <li>SparkFun Electronics 9-Degrees of Freedom Sensor Board</li>
+            <li>SparkFun Console Board</li>
+            <li>Sparkfun Battery Board</li>
+          </ul>
+        </li>
+        <li>Software:
+          <ul>
+            <li>StrongLoop</li>
+            <li>MongoDB</li>
+            <li>Sensor Reader Application</li>
+          </ul>
+        </li>
+      </ul>
+      <p>How does the Demo Work?</p>
+      <ul>
+        <li>The Intel<sup>®</sup> Edison continuously reads the sensor data from the 9-Degrees of Freedom sensor board (9-degrees of freedom means that the sensor board has a 3-axis accelerometer, a 3-axis magnetometer and a 3-axis gyroscope, giving you 9 degrees). </li>
+        <li>All of this data is written to an instance of MongoDB running on the Intel Edison device</li>
+        <li>The StrongLoop Application runs on the Intel Edison device exposing ReST APIs to all of the Data stored in MongoDB</li>
+        <li>The StrongLoop application serves webpages that display the sensor reading in graph form
+          <ul>
+            <li>You can graph each individual reading, or group them by gyroscope, Accelerometer and Magnetometer, or view them all in one chart. </li>
+            <li>You can start and stop the streaming of Live Data from the Edison using the "Live Data" button on the sensor Viewing Pages.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>How do you run the demo?</p>
+      <ul>
+        <li>Almost all of the required processes are already running on the Edison!</li>
+        <li>If you've previously run the Demo, click the "Reset MongoDB" button above to clear out the data store so it doesn't grow too large.</li>
+        <li>Click the "Restart Sensor Logger" Button above to start the sensor logging process.</li>
+        <li>Choose a Sensor or set of sensors to view from the pull-down menu above.</li>
+        <li>You can return to this page any time to restart the sensor logger or the Mongo DB processes</li>
+        <li>If you want to run things manually, or you're having trouble with the above buttons then:
+        <ul>
+            <li>Log in to the Intel Edison via ssh using Username: root Password: DemoDemo</li>
+            <li>Run the script demo-ctrl.sh in the root user's home with the following available options:
+            <ul>
+                <li>start: Start all the necessary processes (restarts them if they are running)</li>
+                <li>stop:  Stop all the running processes for the Demo.</li>
+                <li>update: Make sure that all the packages required for the demo are up to date from GitHub</li>
+                <li>clear: Clear out the Mongo DB datastrore.</li>
+           </ul>
+       </ul>
+        </li>
+        <li>Try moving the sensor around a lot and then load data to get the best views.</li>
+      </ul>
+     
+
+        
+
+    </div>
+</div>
+<div class="footer">
+<p class="contact">
+© 2016 StrongLoop, an IBM Company: Developed by <a href ="http://dragonflyiot.com" target="_blank">Dragonfly IoT</a>  </p>
+</div>
+  </body>
+</html>
+</body>
+</html>

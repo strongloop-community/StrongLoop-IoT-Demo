@@ -1,0 +1,42 @@
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+header, footer {
+    width: 100%;
+    background-color: #143866;
+    color: #81c341;
+    padding: 1em;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 1em;
+}
+
+nav a {
+    padding: 0 0.5em;
+    border-left: 1px solid #ddd;
+}
+nav a.last {
+    border-right: 1px solid #ddd;
+}
+
+.container {
+    margin: 0;
+    padding: 0 2em;
+}
+
+a:link, a:visited {
+    color: #81c341;
+}
+a:hover, a:active {
+    color: #ccc;
+}
+
+footer {
+    margin-top: 1em;
+    font-size: 0.8em;
+}
