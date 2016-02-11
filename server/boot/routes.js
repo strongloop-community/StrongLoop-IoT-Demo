@@ -39,7 +39,8 @@ module.exports = function(server) {
         handle.stderr.on('data', function(data) {
             console.error(data.toString());
         });
-        handle.on('close', function(code) {
+        handle.on('error', cb);
+        handle.on('exit', function(code) {
             cb((code) ? (new Error('Failed to run ' + script + ': ' + code)) : null);
         });
     }

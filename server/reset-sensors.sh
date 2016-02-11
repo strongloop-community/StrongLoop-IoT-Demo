@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
 echo "Finding sensor pid"
-pid=`ps | grep sensors | grep -v grep | awk '{print $1}'`
+pid=`pidof sensors`
 if [ $pid ]; then
-    echo "Killing sensor program"
+    echo "Killing sensor program $pid"
     kill $pid
 fi
 echo "Restarting sensor program"

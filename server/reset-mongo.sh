@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 echo "Finding mongo pid"
-pid=`ps | grep mongod | grep -v grep | awk '{print $1}'`
+pid=`pidof mongod`
 if [ $pid ]; then
-    echo "killing mongo"
-   kill $pid
+    echo "killing mongo $pid"
+    kill $pid
 fi
 echo "Removing Mongo Data"
 rm -rf /data/db/edison*

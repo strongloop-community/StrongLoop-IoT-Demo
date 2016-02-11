@@ -25,6 +25,11 @@
             }).then(function(data) {
                 console.info('Reset success:', data);
                 btn.attr('disabled', false);
+                
+                if (btn.attr('class') === 'reset-mongo') {
+                    document.location.reload();
+                }
+                
             }).fail(function(xhr, status, e) {
                 console.error('Unable to reset' + btn.attr('class'), e);
                 btn.attr('disabled', false);
