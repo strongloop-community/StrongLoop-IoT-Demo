@@ -1,6 +1,6 @@
 
 (function($, d3, c3) {
-    var dateFormat, evSrc;
+    var dateFormat;
     
     $(function() {
         connectResetLinks();
@@ -38,9 +38,7 @@
     
     
     function initChart(div) {
-        
         dateFormat = d3.time.format("%m/%d/%Y %H:%M:%S");
-        evSrc = new EventSource('/api/Sensors/change-stream?_format=event-stream');
         
         getAndFormatData(div.data('sensor'))
             .then(function(columns) {
@@ -72,20 +70,24 @@
     }
     
     function initLiveButtons(chart, type) {
-        var handler = $.proxy(handleLiveData, {
-            chart: chart,
-            type: type
-        });
+        var evtSrc,
+            handler = $.proxy(handleLiveData, {
+                chart: chart,
+                type: type
+            });
         
         $('.live')
             .on('click', function() {
                 var n = $(this);
                 if (n.data('live') === 'on'){
                     n.text('Show Live Data').data('live', 'off');
-                    evSrc.removeEventListener('data', handler);
+                    evtSrc.removeEventListener('data', handler);
+                    evtSrc && evtSrc.close();
+                    evtSrc = null;
                 } else {
                     n.text('Stop Live Data').data('live', 'on');
-                    evSrc.addEventListener('data', handler);
+                    evtSrc = new EventSource('/api/Sensors/change-stream?_format=event-stream')
+                    evtSrc.addEventListener('data', handler);
                 }
             });
     }
