@@ -13,7 +13,7 @@ This is a [LoopBack](http://loopback.io) application, developed for demostrating
 ## Required Software:
 
 * This Code
-* [Sensor Application](https://github.com/davidgs/LSM9DS0)
+* [Sensor Application](https://github.com/strongloop-community/LSM9DS0)
 * [MongoDB](http://mongodb.org)
     * [MongoDB C-Libraries](https://github.com/mongodb/mongo-c-driver)
 
