@@ -36,7 +36,7 @@ once you can log in, you;re ready to install all of the software (this repo incl
   * `echo "src x86 http://iotdk.intel.com/repos/1.1/iotdk/x86" >> /etc/opkg/base-feeds.conf`
   * `echo "src i586 http://iotdk.intel.com/repos/1.1/iotdk/i586" >> /etc/opkg/base-feeds.conf`
 * Update package manager and install git:
-​  * opkg update
+  * opkg update
   * opkg upgrade
   * opkg install git
 * Grab the controller script from this repo and install all other software:
