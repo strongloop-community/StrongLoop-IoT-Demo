@@ -45,7 +45,7 @@ once you can log in, you;re ready to install all of the software (this repo incl
   * ./demo-ctrl.sh install  
   _This could take hours and will install and configure all the software packages required for the demo._
 * Calibrate the sensors:
-​  * cd LSM9DS0
+  * cd LSM9DS0
   * ./calibrate-mag  
   (Note that this requires interaction with the device!)
   * ./calibrate-gyro-acc  
