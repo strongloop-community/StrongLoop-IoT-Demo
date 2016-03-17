@@ -53,7 +53,7 @@ if [ $1 = "install" ]; then
     echo ""
     echo "*********************************************"
     echo "Installing node ... (this will take a while!)"
-    wget http://downloads.mongodb.org/linux/mongodb-linux-i686-3.2.0.tgz
+    # wget http://dragonflyiot.com/demoSoftware/node-v0.12.5.tar.gz
     tar xzf StrongLoop-IoT-Demo/lib/node-v0.12.5.tar.gz
     rm *.tar*
     cd node-v0.12.5
@@ -142,7 +142,7 @@ if [ $1 = "install" ]; then
     echo ""
     echo "*********************************************"
     echo "Installing MongoDB ..."
-    # wget http://dragonflyiot.com/demoSoftware/mongodb-linux-i686-3.2.0.tgz
+    wget http://downloads.mongodb.org/linux/mongodb-linux-i686-3.2.0.tgz
     tar xzf StrongLoop-IoT-Demo/lib/mongodb-linux-i686-3.2.0.tgz
     cp mongodb-linux-i686-3.2.0/bin/* /usr/local/bin
     rm -rf mongodb*
