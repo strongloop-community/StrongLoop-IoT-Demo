@@ -48,7 +48,7 @@ once you can log in, you;re ready to install all of the software (this repo incl
   * cd LSM9DS0
   * ./calibrate-mag  
   (Note that this requires interaction with the device!)
-  * ./calibrate-gyro-acc  
+  * ./calibrate-acc-gyro  
   (Note that this is VERY sensitive. Make sure the device is on a flat surface, with absolutely no motion. It can even pick up sound, so turn off any music! Even with these measures it may take a couple tries to succeed.)
 
 ## Running the Demo
